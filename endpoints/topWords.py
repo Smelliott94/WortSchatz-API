@@ -7,7 +7,7 @@ api = Namespace('topWords',
 @api.route()
 class WordList(Resource):
 
-    def get(self:
+    def get(self)
         
         return jsonify([
     {
