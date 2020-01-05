@@ -4,48 +4,49 @@ from flask import jsonify
 api = Namespace('topWords',
     description='Interface for generating or entering the top words for a lesson')
 
-@api.route('/')
+@api.route('/<date>')
 class WordList(Resource):
 
-    def get(self):
+    def get(self, date):
+        
         return jsonify([
     {
-      'id': 1,
+      'id': 0,
       'word': 'ein',
       'translation': 'one'
     },
     {
-      'id': 2,
+      'id': 1,
       'word': 'zwei',
       'translation': 'two'
     },
     {
-      'id': 3,
+      'id': 2,
       'word': 'drei',
       'translation': 'three'
     },
     {
-      'id': 4,
+      'id': 3,
       'word': 'vier',
       'translation': 'four'
     },
     {
-      'id': 5,
+      'id': 4,
       'word': 'funf',
       'translation': 'five'
     },
     {
-      'id': 6,
+      'id': 5,
       'word': 'sechs',
       'translation': 'six'
     },
     {
-      'id': 7,
+      'id': 6,
       'word': 'sieben',
       'translation': 'seven'
     },
     {
-      'id': 8,
+      'id': 7,
       'word': 'acht',
       'translation': 'eight'
     }
