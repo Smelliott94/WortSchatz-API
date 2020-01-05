@@ -4,10 +4,10 @@ from flask import jsonify
 api = Namespace('topWords',
     description='Interface for generating or entering the top words for a lesson')
 
-@api.route('/<date>')
+@api.route()
 class WordList(Resource):
 
-    def get(self, date):
+    def get(self:
         
         return jsonify([
     {
