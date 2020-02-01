@@ -8,13 +8,13 @@ api = Namespace('words', description='Words to be added to the database')
 
 class Word(db.Model):
     __tablename__ = "words"
-
-    id = db.Column(db.Integer, primary_key=True)
-    word = db.Column(db.String())
-    translation = db.Column(db.String())
     __table_args__ = (
         UniqueConstraint('word', 'translation', name='unique_translated_word'),
     )
+    
+    id = db.Column(db.Integer, primary_key=True)
+    word = db.Column(db.String())
+    translation = db.Column(db.String())
 
     def __init__(self, word, translation):
         self.word = word
