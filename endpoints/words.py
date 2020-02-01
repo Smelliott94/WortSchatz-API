@@ -1,16 +1,10 @@
 from flask_restplus import Namespace, Resource, fields
 from flask import jsonify
-from flask import current_app
 from app import db, translator
+from sqlalchemy import UniqueConstraint
 
 api = Namespace('words', description='Words to be added to the database')
 
-wordModel = api.model(
-    'Word', {
-        'word': fields.String,
-        'translation': fields.String
-    }
-)
 
 class Word(db.Model):
     __tablename__ = "words"
@@ -18,6 +12,9 @@ class Word(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     word = db.Column(db.String())
     translation = db.Column(db.String())
+    __table_args__ = (
+        UniqueConstraint('word', 'translation', name='unique_translated_word'),
+    )
 
     def __init__(self, word, translation):
         self.word = word
@@ -33,13 +30,22 @@ class Word(db.Model):
             "translation": self.translation
         }
 
+
+wordModel = api.model(
+    'Word', {
+        'word': fields.String,
+        'translation': fields.String
+    }
+)
+
+
 @api.route('/')
 class Testing(Resource):
 
     def get(self):
         words = Word.query.all()
         return jsonify([word.serialize() for word in words])
-    
+
     @api.expect(wordModel)
     def post(self):
         p = api.payload
