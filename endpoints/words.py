@@ -2,6 +2,7 @@ from flask_restplus import Namespace, Resource, fields
 from flask import jsonify
 from app import db, translator
 from sqlalchemy import UniqueConstraint
+from lib.google_images import Image
 
 api = Namespace('words', description='Words to be added to the database')
 
@@ -27,7 +28,8 @@ class Word(db.Model):
         return {
             "id": self.id,
             "word": self.word,
-            "translation": self.translation
+            "translation": self.translation,
+            "image": Image(self.word).link  # Generate image link as word is called
         }
 
 
