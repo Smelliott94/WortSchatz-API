@@ -1,14 +1,26 @@
 from flask import Flask
+import os
 from flask_restplus import Api
-from endpoints import topWords
-
-from endpoints.topWords import api as topWords
+from flask_sqlalchemy import SQLAlchemy
+from googletrans import Translator
 
 app = Flask(__name__)
-api = Api(app, version='ALPHA', title='Wortschatz',
-    description='Smart vocab tracking for German lessons')
+translator = Translator()
+app.config.from_object(os.environ['APP_SETTINGS'])
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
+api = Api(
+    app,
+    version='ALPHA',
+    title='Wortschatz',
+    description='Smart vocab tracking for German lessons'
+    )
+
+from endpoints.topWords import api as topWords
+from endpoints.words import api as words
 api.add_namespace(topWords)
+api.add_namespace(words)
 
 @app.after_request
 def cors_headers(response):
