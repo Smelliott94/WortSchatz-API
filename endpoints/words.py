@@ -29,7 +29,7 @@ class Word(db.Model):
             "id": self.id,
             "word": self.word,
             "translation": self.translation,
-            "image": Image(self.word).link  # Generate image link as word is called
+            "image": Image(self.translation).link  # Generate image link as word is called
         }
 
 
